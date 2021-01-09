@@ -1,0 +1,9 @@
+docker build /mnt/orage/Programming/VagrantTraining/boinc-client-docker/ -f Dockerfile.amd -t boinc-client
+
+docker tag boinc-client hikarukenta/boinc-client:amd
+
+docker push hikarukenta/boinc-client:amd
+
+
+
+sudo docker pull hikarukenta/boinc-client:amd

@@ -25,6 +25,8 @@ EXPOSE 31416
 
 # Install
 RUN apt-get update && apt-get install -y --no-install-recommends \
+# Install locales
+    locales locales-all \
 # Install PPA dependency
     software-properties-common \
 # Install Time Zone Database
@@ -33,6 +35,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     add-apt-repository -y ppa:costamagnagianfranco/boinc && \
     apt-get update && apt-get install -y --no-install-recommends \
     boinc-client && \
+# Generate and setup locales
+    locale-gen en_US && \
+    locale-gen en_US.utf8 && \
+    #dpkg-reconfigure locales && \
+    echo "LANG=en_US.utf8" > /etc/default/locale && \
+    echo "LC_ALL=en_US.utf8" >> /etc/default/locale && \
+    update-locale LANG=en_US.utf8 LC_ALL=en_US.utf8 && \
+    locale-gen && \
+    echo "export LC_ALL=en_US.utf8" >> /etc/profile && \
+    echo "export LC_ALL=en_US.utf8" >> /etc/bash.bashrc && \
+    # export LC_ALL=en_US.utf8 && \
+    # export LANG=en_US.utf8 && \
 # Cleaning up
     apt-get remove -y software-properties-common && \
     apt-get autoremove -y && \
